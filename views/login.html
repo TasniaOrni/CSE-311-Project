@@ -39,14 +39,40 @@
 
   <main>
     <div class="content mt-xs-2 mt-md-4">
-      <div class="container">
+      <div class="container py-4">
         <div class="row">
-          <div class="col-md-12">
-            <h1>Project Name</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quidem, tempora, ipsum, quas, quis, vel, vero, eum, dolorem, aspernatur, doloribus, aliquam.</p>
+          <div class="col-md-6">
+            <img src="/assets/images/signin.svg" alt="Image" class="img-fluid">
+          </div>
+          <div class="col-md-6">
+            <div class="row d-flex align-items-center justify-content-center mb-5">
+              <div class="col-md-8">
+                <div class="mb-4">
+                  <h3 class="text-center">Join!</h3>
+                </div>
+                <form action="#" method="post">
+                  <div class="form-group first">
+                    <label for="username">Email</label>
+                    <input type="email" class="form-control" id="username" name="email">
+
+                  </div>
+                  <div class="form-group last mt-2 mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                  </div>
+
+                  <div class="d-flex mb-3 align-items-center">
+                    <div class="ml-auto"><a href="#" class="text-dark forgot-pass text-decoration-none">Forgot Password</a></div>
+                  </div>
+
+                  <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
   </main>
 
   <footer class="footer mt-auto bg-dark text-white py-2">
@@ -64,8 +90,7 @@
   </footer>
 
   <!-- Bootstrap 5 JS  -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 
 </html>
