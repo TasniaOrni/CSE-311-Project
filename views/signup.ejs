@@ -48,26 +48,43 @@
             <div class="row d-flex align-items-center justify-content-center mb-5">
               <div class="col-md-8">
                 <div class="mb-4">
-                  <h3 class="text-center">Join!</h3>
+                  <h3 class="text-center">Sign up!</h3>
                 </div>
                 <form action="#" method="post">
                   <div class="form-group first">
-                    <label for="username">Email</label>
-                    <input type="email" class="form-control" id="username" name="email">
+                    <label for="name"> Name</label>
+                    <input type="text" id="name" class="form-control" name="name" placeholder="Your Name">
                   </div>
-                  <div class="form-group last mt-2 mb-3">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                  </div>
-
-                  <div class="d-flex mb-3 align-items-center">
-                    <div class="ml-auto"><a href="#" class="text-dark forgot-pass text-decoration-none">Forgot Password</a></div>
+                  <div class="form-group mt-2">
+                    <label for="email"> Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="abc@gmail.com">
                   </div>
 
-                  <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                  <div class="form-group mt-2">
+                    <label for="password"> Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Your Password">
+                  </div>
+                  <div class="form-group mt-2">
+                    <label for="confirmPassword"> Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Your Password">
+                  </div>
+                  <div class="form-group last my-3">
+                    <p>
+                      <span><input type="checkbox" class="radio me-2" value="applicant" name="role" onclick="onlyOne(this)" checked />Applicant</span>
+                    </p>
+
+                    <p>
+                      <span><input type="checkbox" class="radio  me-2" value="recruiter" name="role" onclick="onlyOne(this)" />Recruiter</span>
+                    </p>
+                    <div>
+                      <span id="notvalid"></span>
+                    </div>
+
+                  </div>
+                  <input type="submit" value="Sign Up" class="btn btn-block btn-primary mb-3">
+                  <hr>
+                  <p>Already have an account? <a class="text-decoration-none" href="/login">Login</a></p>
                 </form>
-                <hr class="mt-4">
-                <p>Doesn't have an account? <a class="text-decoration-none" href="/signup">Sign up!</a></p>
               </div>
             </div>
           </div>
@@ -92,6 +109,14 @@
 
   <!-- Bootstrap 5 JS  -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    function onlyOne(checkbox) {
+      var checkboxes = document.getElementsByName('role');
+      checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false;
+      });
+    }
+  </script>
 </body>
 
 </html>
