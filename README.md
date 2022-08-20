@@ -2,6 +2,10 @@
 
 The main purpose of this project to introduce ourselves to the concepts of Relational Database Systems.
 
+## Database Design
+
+ <img src="docs/diagram.svg"/>
+
 ## Technologies used:
 
 - Node.js
