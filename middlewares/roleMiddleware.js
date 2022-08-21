@@ -1,10 +1,11 @@
 const Sequelize = require('../models/index').sequelize;
 
 const isAdmin = async (req, res, next) => {
-	const { role, email } = res.locals.data.credential;
+	const { role } = res.locals.data.credential;
+	const { id } = res.locals.data.user;
 
 	if (role === 'admin') {
-		var admin = await Sequelize.query(`SELECT * FROM credentials WHERE email = '${email}';`, {
+		var admin = await Sequelize.query(`SELECT * FROM admins WHERE uid = '${id}';`, {
 			type: Sequelize.QueryTypes.SELECT,
 			raw: true,
 		})
@@ -35,12 +36,13 @@ const isAdmin = async (req, res, next) => {
 };
 
 const isRecruiter = async (req, res, next) => {
-	const { role, email } = res.locals.data.credential;
+	const { role } = res.locals.data.credential;
+	const { id } = res.locals.data.user;
 
 	if (role === 'recruiter') {
 		// console.log(res.locals.data);
 
-		var recruiter = await Sequelize.query(`SELECT * FROM credentials WHERE email = '${email}';`, {
+		var recruiter = await Sequelize.query(`SELECT * FROM recruiters WHERE uid = '${id}';`, {
 			type: Sequelize.QueryTypes.SELECT,
 			raw: true,
 		})
@@ -56,16 +58,13 @@ const isRecruiter = async (req, res, next) => {
 			});
 
 		if (recruiter) {
-			delete recruiter.password;
-
 			res.locals.data.recruiter = recruiter;
 		} else {
 			res.locals.data.recruiter = {};
 		}
+		// console.log(res.locals.data);
 
 		return next();
-
-		// console.log(res.locals.data);
 	} else {
 		res.session.message = 'Access denied';
 		await res.redirect('/error');
@@ -73,12 +72,11 @@ const isRecruiter = async (req, res, next) => {
 };
 
 const isApplicant = async (req, res, next) => {
-	const { role, email } = res.locals.data.credential;
-
-	// console.log(res.locals.data);
+	const { role } = res.locals.data.credential;
+	const { id } = res.locals.data.user;
 
 	if (role === 'applicant') {
-		var applicant = await Sequelize.query(`SELECT * FROM credentials WHERE email = '${email}';`, {
+		var applicant = await Sequelize.query(`SELECT * FROM applicants WHERE uid = '${id}';`, {
 			type: Sequelize.QueryTypes.SELECT,
 			raw: true,
 		})
@@ -94,12 +92,12 @@ const isApplicant = async (req, res, next) => {
 			});
 
 		if (applicant) {
-			delete applicant.password;
-
 			res.locals.data.applicant = applicant;
 		} else {
 			res.locals.data.applicant = {};
 		}
+
+		// console.log(res.locals.data);
 
 		return next();
 	} else {
