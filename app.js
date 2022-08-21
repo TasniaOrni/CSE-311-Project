@@ -1,10 +1,12 @@
 const path = require('path');
 const express = require('express');
-const session = require('cookie-session');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const session = require('cookie-session');
 
 const config = require('./config/server.config');
 const routes = require('./routes');
+const fileUpload = require('./middlewares/fileUploadMiddleware');
 
 const app = express();
 const port = process.env.PORT || 3002;
@@ -33,6 +35,15 @@ app.use(
 			httpOnly: true,
 		},
 	})
+);
+
+app.use(
+	multer({
+		storage: fileUpload.pdfCheck,
+		limits: {
+			fileSize: 1024 * 1024 * 5, // 5MB
+		},
+	}).single('pdf')
 );
 
 app.use('/', routes);
