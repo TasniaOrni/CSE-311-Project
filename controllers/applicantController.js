@@ -2,138 +2,66 @@ const Sequelize = require('../models/index').sequelize;
 const tokenGenerator = require('../utils/tokenGenerator');
 
 // user itself can perform this operation
-const profileCreateUpdate = async (req, res) => {
+const profileupdate = async (req, res) => {
 	const uid = res.locals.data.user.id;
-	const { phone, address } = req.body;
 
+	const { phone, address } = req.body;
 	const { status, region, country, currentPosition, currentCompany, birthday, education, skill } = req.body;
 
-	// console.log(req.body);
+	var url = null;
 
-	await User.update(
-		{
-			phone,
-			address,
-		},
-		{
-			where: {
-				id: uid,
-			},
-		}
-	)
-		.then(() => {
-			var url = '';
-			if (req.file) {
-				url = req.file.path.replace('assets', '');
+	if (req.file) {
+		url = req.file.path.replace('assets', '');
+	}
 
-				Applicant.upsert(
-					{
-						cv: url,
-						dob: birthday,
-						skill: skill,
-						status: status,
-						education: education,
-						region: region,
-						country: country,
-						currentCompany: currentCompany,
-						currentPosition: currentPosition,
-						uid: uid,
-					},
-					{
-						where: {
-							uid: uid,
-						},
-					}
-				)
-					.then((applicant, isCreated) => {
-						// console.log("New user : ", isCreated, " Applicant : ", applicant);
-						//
+	const userUpdateQuery = `UPDATE applicants SET phone = '${phone}', address = '${address}' WHERE uid = '${uid}'`;
 
-						// update cookie
-						const user = res.locals.data.user;
-						user.phone = phone;
-						user.address = address;
-
-						const token = tokenGenerator.generateToken(res.locals.data.credential, user);
-
-						/*
-						 * Clear previous cookie and set new cookie
-						 */
-						res.clearCookie('getscouted');
-
-						res.cookie('getscouted', token, {
-							maxAge: 12 * 60 * 60 * 1000, // 12 hour
-							httpOnly: true,
-							sameSite: true,
-							secure: true,
-							signed: true,
-						});
-
-						res.redirect('/applicant/');
-					})
-					.catch((err) => {
-						// console.error(err);
-
-						req.session.message = err.message;
-						res.redirect('/error');
-					});
-			} else {
-				Applicant.upsert(
-					{
-						cv: req.body.previousCV,
-						dob: birthday,
-						skill: skill,
-						status: status,
-						education: education,
-						region: region,
-						country: country,
-						currentCompany: currentCompany,
-						currentPosition: currentPosition,
-						uid: uid,
-					},
-					{
-						where: {
-							uid: uid,
-						},
-					}
-				)
-					.then((applicant, isCreated) => {
-						// console.log("New user : ", isCreated, " Applicant : ", applicant);
-						//
-
-						// update cookie
-						const user = res.locals.data.user;
-						user.phone = phone;
-						user.address = address;
-
-						const token = tokenGenerator.generateToken(res.locals.data.credential, user);
-
-						/*
-						 * Clear previous cookie and set new cookie
-						 */
-						res.clearCookie('getscouted');
-
-						res.cookie('getscouted', token, {
-							maxAge: 12 * 60 * 60 * 1000, // 12 hour
-							httpOnly: true,
-							sameSite: true,
-							secure: true,
-							signed: true,
-						});
-
-						res.redirect('/applicant/');
-					})
-					.catch((err) => {
-						// console.error(err);
-
-						req.session.message = err.message;
-						res.redirect('/error');
-					});
-			}
+	const userUpdate = await Sequelize.query(userUpdateQuery, {
+		type: Sequelize.QueryTypes.UPDATE,
+		raw: true,
+	})
+		.then((data) => {
+			console.log(data);
+			return data;
 		})
 		.catch((err) => {
 			console.log(err);
+			return null;
 		});
+
+	if (url) {
+		var updateApplicantQuery = `UPDATE applicants SET status = '${status}', cv = '${url}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}' WHERE uid = '${uid}'`;
+
+		const updateApplicant = await Sequelize.query(updateApplicantQuery, {
+			type: Sequelize.QueryTypes.UPDATE,
+			raw: true,
+		})
+			.then((data) => {
+				console.log(data);
+				return data;
+			})
+			.catch((err) => {
+				console.log(err);
+				return null;
+			});
+	} else {
+		var updateApplicantQuery = `UPDATE applicants SET status = '${status}',  region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}' WHERE uid = '${uid}'`;
+
+		const updateApplicant = await Sequelize.query(updateApplicantQuery, {
+			type: Sequelize.QueryTypes.UPDATE,
+			raw: true,
+		})
+			.then((data) => {
+				console.log(data);
+				return data;
+			})
+			.catch((err) => {
+				console.log(err);
+				return null;
+			});
+	}
+
+	return res.status(200).send({ message: 'Profile updated successfully' });
 
 	// // check data is valid
 	// // console.log(req.body);
@@ -247,7 +175,7 @@ const applicationView = async (req, res) => {
 };
 
 module.exports = {
-	profileCreateUpdate,
+	profileupdate,
 	profileCreateView,
 	profileUpdateView,
 	dashboardView,

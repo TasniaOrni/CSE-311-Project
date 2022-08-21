@@ -5,7 +5,7 @@ const applicantController = require('../controllers/applicantController');
 const authMiddleware = require('../middlewares/authMiddleWare.js');
 const roleValidation = require('../middlewares/roleMiddleware');
 
-router.post('/', authMiddleware.isAuthenticated, roleValidation.isApplicant, applicantController.profileCreateUpdate);
+router.post('/', authMiddleware.isAuthenticated, roleValidation.isApplicant, applicantController.profileupdate);
 
 router.get('/', authMiddleware.isAuthenticated, roleValidation.isApplicant, applicantController.dashboardView);
 router.get('/profile', authMiddleware.isAuthenticated, roleValidation.isApplicant, applicantController.profileView);
