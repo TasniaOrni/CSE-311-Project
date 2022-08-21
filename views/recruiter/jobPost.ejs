@@ -1,0 +1,71 @@
+<%- include('includes/head') %>
+
+<main class="container">
+  <div class="col-md-12 mt-4">
+    <h2 class="text-center">Post A Job</h2>
+    <hr>
+
+    <form id="createJobPost" action="/jobs/" method="post">
+      <div class="my-3 mt-5">
+        <label for="exampleInputTitle" class="form-label">Title</label>
+        <input type="text" class="form-control" id="exampleInputTitle" name="title" placeholder="Title">
+      </div>
+      <div class="my-3">
+        <label for="exampleInputDescription" class="form-label">Description</label>
+        <input type="text" class="form-control" style="height: 100px;" id="exampleInputDescription" name="description" placeholder="Description">
+      </div>
+      <div class="my-3">
+        <label for="exampleInputDeadline" class="form-label">Deadline</label>
+        <input type="date" class="form-control" id="exampleInputDeadline" name="deadline" placeholder="Deadline">
+      </div>
+      <div class="my-3">
+        <label for="exampleInputType" class="form-label">Type</label>
+        <select class="form-select" name="type">
+          <option value="Full-time" selected>Full-time</option>
+          <option value="Part-Time">Part-time</option>
+          <option value="Internship">Internship</option>
+        </select>
+      </div>
+      <div class="my-3">
+        <label for="exampleInputPlacement" class="form-label">Placement</label>
+        <select class="form-select" name="placement">
+          <option selected>Remote</option>
+          <option value="1">On-site</option>
+          <option value="2">Hybrid</option>
+        </select>
+      </div>
+      <div class="my-3">
+        <label for="exampleInputSalary" class="form-label">Salary</label>
+        <input type="number" class="form-control" id="exampleInputSalary" name="salary" placeholder="0/-100/-">
+      </div>
+      <div class="my-3">
+        <label for="exampleInputLocation" class="form-label">Location</label>
+        <input type="text" class="form-control" id="exampleInputLocation" name="location" placeholder="Location">
+      </div>
+      <div class="my-3">
+        <label for="exampleInputVacancy" class="form-label">Vacancy</label>
+        <input type="number" class="form-control" id="exampleInputVacancy" name="vacancy" placeholder="Vacancy">
+      </div>
+      <div class="my-3">
+        <label for="exampleInputStatus" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          <option selected>Open</option>
+          <option value="1">Filled</option>
+          <option value="2">Removed</option>
+          <option value="3">Closed</option>
+        </select>
+      </div>
+
+      <div id="message" style="color: red;">
+
+      </div>
+
+      <div class="mb-4">
+        <button type="submit" class="btn btn-dark px-5 mt-5 mb-5">Post</button>
+      </div>
+    </form>
+
+  </div>
+</main>
+
+<%- include('includes/foot') %>

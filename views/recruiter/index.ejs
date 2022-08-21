@@ -1,0 +1,34 @@
+<%- include('includes/head') %>
+
+<main class="container">
+  <div class="row">
+    <div class="d-flex align-items-center justify-content-center mt-5">
+      <div class="col-md-4 card mx-2 p-2">
+        <div class="card-content justify-content-center">
+          <h3 class="number text-center">
+            <%= total %>
+          </h3>
+          <h4 class="card-name text-center">All Posts</h4>
+        </div>
+      </div>
+      <div class="col-md-4 card mx-2 p-2">
+        <div class="card-content justify-content-center">
+          <h3 class="number text-center">
+            0
+          </h3>
+          <h4 class="card-name text-center">Responses</h4>
+        </div>
+      </div>
+      <div class="col-md-4 card mx-2 p-2">
+        <div class="card-content justify-content-center">
+          <h3 class="number text-center">
+            <%= active %>
+          </h3>
+          <h4 class="card-name text-center">Open Posts</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('includes/foot') %>

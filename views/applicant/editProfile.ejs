@@ -1,0 +1,123 @@
+<%- include('includes/head') %>
+
+<!--profile starts-->
+
+<main class="container body rounded bg-white mb-5">
+
+  <div class="row">
+    <!--image part starts-->
+    <div class="d-flex flex-column align-items-center text-center p-3">
+      <img class="rounded-circle mt-5" width="150px" src="/images/profile.png">
+      <span class="font-weight-bold">
+        <%= data.user.name %>
+      </span>
+      <span class="text-black-50">
+        <%= data.credential.email %>
+      </span><span> </span>
+    </div>
+    <!-- image part ends-->
+    <!-- </div> -->
+
+    <form action="/applicant/" method="post" id="editProfileForm" enctype="multipart/form-data">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="text-right">Profile Settings</h4>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <label class="labels" style="margin-top: 0px;">Name</label><input type="text" class="form-control" name="name" placeholder="Name" value="<%= data.user.name %>">
+        </div>
+      </div>
+      <div class="row mt-3">
+
+        <div class="col-md-12">
+          <label class="labels">Address</label><input type="text" class="form-control" name="address" placeholder="Address" value="<%= data.user.address %>">
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Phone</label><input type="text" class="form-control" name="phone" placeholder="enter phone number" value="<%= data.user.phone %>">
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Birthday</label><input type="date" id="birthday" class="form-control" name="birthday" value="">
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Email ID</label><input type="text" class="form-control" name="emailId" value="<%= data.credential.email %>" readonly>
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Education</label><input type="text" class="form-control" name="education" placeholder="education" value="">
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Skills</label>
+          <select name="skill" id="selected_Cat" class="form-control from-control-login">
+            <option value="none" selected="">Select</option>
+            <option value="Education/Training">Education/Training</option>
+            <option value="Bank/Non-Bank Fin. Institution">Bank/Non-Bank Fin. Institution</option>
+            <option value="Accounting/FinanceEducation/Train">Accounting/FinanceEducation/Training
+            </option>
+            <option value="Commercial/Supply Chain">Commercial/Supply Chain</option>
+            <option value="Engineer/Architect">Engineer/Architect</option>
+            <option value="IT/Telecommunication">IT/Telecommunication</option>
+            <option value="General Management/Admin">General Management/Admin</option>
+            <option value="Garments/Textile">Garments/Textile</option>
+            <option value="Marketing/Sales">Marketing/Sales</option>
+            <option value="Media/Advertisement/Event Mgt.">Media/Advertisement/Event Mgt.</option>
+            <option value="Medical/Pharma">Medical/Pharma</option>
+            <option value="NGO/Development">NGO/Development</option>
+            <option value="Research/Consultancy">Research/Consultancy</option>
+            <option value="Secretary/Receptionist">Secretary/Receptionist</option>
+            <option value="Data Entry/Operator/BPO">Data Entry/Operator/BPO</option>
+            <option value="Customer Support/Call Centre">Customer Support/Call Centre</option>
+            <option value="HR/Org. Development">HR/Org. Development</option>
+            <option value="Design/Creative">Design/Creative</option>
+            <option value="Production/Operation">Production/Operation</option>
+            <option value="Hospitality/ Travel/ Tourism">Hospitality/ Travel/ Tourism</option>
+            <option value="Beauty Care/ Health & amp; Fitness">Beauty Care/ Health & amp; Fitness
+            </option>
+            <option value="Law/Legal">Law/Legal</option>
+            <option value="Electrician/ Construction/ Repair">Electrician/ Construction/ Repair</option>
+            <option value="Security/Support Service">Security/Support Service</option>
+            <option value="Driving/Motor Technician">Driving/Motor Technician</option>
+            <option value="Agro (Plant/Animal/Fisheries)">Agro (Plant/Animal/Fisheries)</option>
+          </select>
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Current Company</label><input type="text" class="form-control" name="currentCompany" placeholder="Current Company" value="">
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Current Position</label><input type="text" class="form-control" name="currentPosition" placeholder="Current Position" value="">
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Upload CV</label><input name="pdf" type="file" class="form-control" name="pdf" placeholder="CV" value="">
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Status</label><input type="text" name="status" class="form-control" name="status" placeholder="Status" value="">
+        </div>
+
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" name="country" placeholder="country" value="">
+        </div>
+
+        <div class="col-md-6"><label class="labels">Region</label><input type="text" class="form-control" name="region" value="" placeholder="state">
+        </div>
+      </div>
+      <div id="message" class="mt-5 text-center" style="color: red;">
+
+      </div>
+      <div class="mt-2 text-center"><button class="btn btn-PRIMARI profile-button" type="submit">Save
+          Profile</button></div>
+    </form>
+
+  </div>
+</main>
+
+<!-- footer part starts-->
+<%- include('includes/foot') %>

@@ -1,0 +1,17 @@
+<%- include('includes/head') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- for each loop -->
+      <% if(data.jobs.length> 0 ) { data.jobs.forEach((job, index) => { %>
+      <%- include('modules/appliedJobCard', {job, index}) %>
+      <% }) } else { %>
+      <h2>No where you applied yet.</h2>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('includes/foot') %>

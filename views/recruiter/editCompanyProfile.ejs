@@ -1,0 +1,107 @@
+<%- include('../modules/head') %>
+
+<!--profile starts-->
+
+<div class="container body rounded bg-white mb-5">
+
+  <div class="row">
+
+    <!-- <div class="col-md-3 border-right"> -->
+
+    <!--image part starts-->
+    <div class="d-flex flex-column align-items-center text-center p-3">
+      <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+      <span class="font-weight-bold">
+        <%= data.user.name %>
+      </span>
+      <span class="text-black-50">
+        <%= data.credential.email %>
+      </span><span> </span>
+    </div>
+    <!-- image part ends-->
+  </div>
+
+  <form action="/recruiter/" method="post" id="editProfileForm">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="text-right">Profile Settings</h4>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <label class="labels">User Address</label><input type="text" class="form-control" name="address" placeholder="Address" value="<%= data.user.address %>">
+      </div>
+
+      <div class="col-md-12 pb-5">
+        <label class="labels">User Phone</label><input type="text" class="form-control" name="phone" placeholder="enter phone number" value="<%= data.user.phone %>">
+      </div><br>
+      <div class="col-md-12">
+        <label class="labels" style="margin-top: 0px;">Company Name</label><input type="text" class="form-control" name="companyName" placeholder="Company Name" value="<%= data.recruiter.companyName %>">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <label class="labels">Email</label><input type="text" class="form-control" name="email" placeholder="Email" value="<%= data.credential.email %>" readonly>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group mt-3">
+          <label for="phone">Contact Number</label>
+          <input type="text" class="form-control" name="contactNumber" placeholder="Contact Number" contenteditable="false" value="<%= data.recruiter.contactNumber %>">
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group mt-3">
+          <label for="address">Company Address</label>
+          <input type="text" class="form-control" name="companyAddress" placeholder="Company Address" value="<%= data.recruiter.companyAddress %>">
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Year of Establishment</label><input type="text" id="yearOfEstablishment" class="form-control" name="yearOfEstablishment" placeholder="Year of Establishment" value="<%= data.recruiter.yearOfEstablishment %>">
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group mt-3">
+            <label for="address">Country</label>
+            <input type="text" name="country" class="form-control" id="country" placeholder="Country" value="<%= data.recruiter.country %>">
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group mt-3">
+            <label for="address">Region</label>
+            <input type="text" name="region" class="form-control" id="address" placeholder="Region" value="<%- data.recruiter.region %>">
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Business Description</label><input type="text" class="form-control" name="businessDescription" placeholder="Business Description" value="<%- data.recruiter.businessDescription %>">
+        </div>
+
+        <div class="col-md-12">
+          <label class="labels">Business/Trading License No.</label><input type="text" class="form-control" name="tradingLicense" placeholder="Business/Trading License No." value="<%- data.recruiter.tradingLicense %>">
+        </div>
+        <div class="col-md-12">
+          <label class="labels">Website URL</label><input type="text" name="websiteURL" class="form-control" name="websiteURL" placeholder="Website URL" value="<%- data.recruiter.websiteURL %>">
+        </div>
+
+      </div>
+      <div id="message" class="mt-5 text-center" style="color: red;">
+
+      </div>
+      <div class="mt-2 text-center mb-5"><button class="btn btn-PRIMARI profile-button" type="submit">Save
+          Profile</button></div>
+  </form>
+
+</div>
+</div>
+
+<script src="/js/vendor/jquery-3.6.0.min.js"></script>
+<script src="/js/recruiter/profile.js"></script>
+
+</body>
+
+<!--profile ends-->
+
+<!-- footer part starts-->
+<%- include('../modules/foot') %>

@@ -1,0 +1,90 @@
+<%- include('includes/head') %>
+
+<main class="container pb-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="d-flex align-items-center justify-content-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 d-flex align-items-center justify-content-end mt-3">
+              <img src="/images/profile.png" width="100px" alt="profile picture" srcset="">
+            </div>
+          </div>
+
+          <div class="row my-1">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="firstName">Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="No Name" value="<%- data.user.name %>" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="row my-1">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" i class="form-control" id="email" placeholder="No Email" value="<%- data.credential.email %>" readonly>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" placeholder="No Phone" contenteditable="false" value="<%- data.user.phone %>" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 my-1">
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" placeholder="No Address" value="<%- data.user.address %>" readonly>
+              </div>
+            </div>
+            <div class="col-md-12 my-1">
+              <label class="labels">Birthday</label><input type="date" id="birthday" class="form-control" name="birthday" value="<%- data.applicant.dob %>" readonly>
+            </div>
+            <div class="col-md-12 my-1">
+              <label class="labels">Education</label><input type="text" class="form-control" name="education" placeholder="No Education" value="<%- data.applicant.education %>" readonly>
+            </div>
+            <div class="col-md-12 my-1">
+              <label class="labels">Skill</label><input type="text" class="form-control" name="skill" placeholder="No Skill" value="<%- data.applicant.skill %>" readonly>
+            </div>
+            <div class="col-md-12 my-1">
+              <div class="form-group">
+                <label for="address">Country</label>
+                <input type="text" class="form-control" id="country" placeholder="No Country" value="<%- data.applicant.country %>" readonly>
+              </div>
+            </div>
+            <div class="col-md-12 my-1">
+              <div class="form-group">
+                <label for="address">Region</label>
+                <input type="text" class="form-control" id="address" placeholder="No Region" value="<%- data.applicant.region %>" readonly>
+              </div>
+            </div>
+            <div class="col-md-12 my-1">
+              <label class="labels">Current Company</label><input type="text" class="form-control" name="currentCompany" placeholder="No Current Company" value="<%- data.applicant.currentCompany %>" readonly>
+            </div>
+
+            <div class="col-md-12 my-1">
+              <label class="labels">Current Position</label><input type="text" class="form-control" name="currentPosition" placeholder="No Current Position" value="<%- data.applicant.currentPosition %>" readonly>
+            </div>
+
+            <div class="col-md-12 my-1">
+              <label class="labels">Status</label><input type="text" name="status" class="form-control" name="status" placeholder="No Status" value="<%- data.applicant.status %>" readonly>
+            </div>
+            <div class="d-flex align-items-center justify-content-center mt-3">
+              <a href="<%= data.applicant.cv %>" class="btn btn-dark px-5 mt-3 mb-5 me-2">Download
+                CV</a>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('includes/foot') %>

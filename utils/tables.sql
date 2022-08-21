@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS `credentials`(
     `password` VARCHAR(255) NOT NULL,
     `role` VARCHAR(255) NOT NULL DEFAULT 'applicant',
     `isBan` TINYINT(1) NOT NULL DEFAULT 0,
-    `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(`id`),
     UNIQUE KEY email(`email`)
 ) ENGINE = INNODB;
@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS `users`(
     `phone` VARCHAR(255) DEFAULT NULL,
     `address` VARCHAR(255) DEFAULT NULL,
     `cid` CHAR(36) NOT NULL,
-    `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(`id`),
     UNIQUE KEY `cid`(`cid`),
     CONSTRAINT `users_credentials` FOREIGN KEY(`cid`) REFERENCES credentials(`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS `applicants`(
     `currentPosition` VARCHAR(255) DEFAULT NULL,
     `isCompleted` TINYINT(1) NOT NULL DEFAULT 0,
     `isVerified` TINYINT(1) NOT NULL DEFAULT 0,
-    `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `uid` CHAR(36) DEFAULT NULL,
     PRIMARY KEY(`id`),
     KEY `uid`(`uid`),
@@ -61,8 +61,8 @@ CREATE TABLE IF NOT EXISTS `recruiters`(
     `businessDescription` VARCHAR(255) NOT NULL,
     `tradeLicense` VARCHAR(255) NOT NULL,
     `websiteURL` VARCHAR(255) NOT NULL,
-    `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `uid` CHAR(36) DEFAULT NULL,
     PRIMARY KEY(`id`),
     KEY `uid`(`uid`),
@@ -72,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `recruiters`(
 CREATE TABLE IF NOT EXISTS `admins`(
     `id` CHAR(36) NOT NULL,
     `uid` CHAR(36) NOT NULL,
-    `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(`id`),
     UNIQUE KEY `uid`(`uid`),
     CONSTRAINT `admins_users` FOREIGN KEY(`uid`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -91,8 +91,8 @@ CREATE TABLE IF NOT EXISTS `jobs`(
     `vacancy` INT(11) NOT NULL DEFAULT 1,
     `status` VARCHAR(255) NOT NULL DEFAULT 'open',
     `isVerified` TINYINT(1) NOT NULL DEFAULT 0,
-    `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `rid` CHAR(36) DEFAULT NULL,
     PRIMARY KEY(id),
     KEY `rid`(`rid`),
@@ -102,13 +102,13 @@ CREATE TABLE IF NOT EXISTS `jobs`(
 CREATE TABLE IF NOT EXISTS `jobApplications`(
     `id` CHAR(36) NOT NULL,
     `result` VARCHAR(255) NOT NULL DEFAULT 'pending',
-    `createdAt` DATETIME NOT NULL,
-    `updatedAt` DATETIME NOT NULL,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `jobId` CHAR(36) DEFAULT NULL,
     `applicantId` CHAR(36) DEFAULT NULL,
     PRIMARY KEY(`id`),
     UNIQUE KEY `jobApplications_applicantId_jobId_unique`(`jobId`, `applicantId`),
     KEY `applicantId`(`applicantId`),
-    CONSTRAINT `jobApplications_ibfk_1` FOREIGN KEY(`jobId`) REFERENCES `jobs`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `jobApplications_ibfk_2` FOREIGN KEY(`applicantId`) REFERENCES `applicants`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `jobApplications_jobs` FOREIGN KEY(`jobId`) REFERENCES `jobs`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `jobApplications_applicants` FOREIGN KEY(`applicantId`) REFERENCES `applicants`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = INNODB;

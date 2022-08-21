@@ -1,41 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Name</title>
-
-  <!-- Bootstrap 5 css -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/footer.css">
-</head>
-
-<body class="d-flex flex-column h-100">
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="/">
-          <img src="/placeholder.png" height="34px" alt="project logo">
-        </a>
-        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <div class="navbar-nav mx-auto d-flex justify-content-evenly">
-            <a href="/" class="nav-link text-decoration-none mx-2">Home</a>
-            <a href="/jobs" class="nav-link text-decoration-none mx-2">Jobs</a>
-            <a href="/contact" class="nav-link text-decoration-none mx-2">Contact</a>
-          </div>
-          <div class="mx-auto d-inline-block">
-            <a href="/login" class="link-dark text-decoration-none mx-auto ">Login</a> <span> / </span>
-            <a href="/signup" class="link-dark text-decoration-none mx-auto ">Sign up</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </header>
+<%- include('modules/head') %>
 
   <main>
     <div class="content mt-xs-2 mt-md-4">
@@ -50,21 +13,21 @@
                 <div class="mb-4">
                   <h3 class="text-center">Join!</h3>
                 </div>
-                <form action="#" method="post">
+                <form action="#" method="post" id="loginForm">
                   <div class="form-group first">
-                    <label for="username">Email</label>
-                    <input type="email" class="form-control" id="username" name="email">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email">
                   </div>
                   <div class="form-group last mt-2 mb-3">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control" id="password" name="password" autocomplete="false">
                   </div>
 
                   <div class="d-flex mb-3 align-items-center">
-                    <div class="ml-auto"><a href="#" class="text-dark forgot-pass text-decoration-none">Forgot Password</a></div>
+                    <div class="ml-auto text-danger" id="responseMessage"></div>
                   </div>
 
-                  <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                  <input type="submit" value="Log In" class="btn btn-block btn-primary loginBtn">
                 </form>
                 <hr class="mt-4">
                 <p>Doesn't have an account? <a class="text-decoration-none" href="/signup">Sign up!</a></p>
@@ -76,22 +39,4 @@
     </div>
   </main>
 
-  <footer class="footer mt-auto bg-dark text-white py-2">
-    <div class="container text-center text-md-left">
-      <!-- copyright section -->
-      <div class="row align-items-center">
-        <p> &copy;
-          <a href="#" class="text-decoration-none">
-            <strong class="text-white"> The Noobs</strong>
-          </a>
-          2022 All rights reserved
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Bootstrap 5 JS  -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body>
-
-</html>
+  <%- include('modules/foot') %>

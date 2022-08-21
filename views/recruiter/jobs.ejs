@@ -1,0 +1,26 @@
+<%- include('includes/head') %>
+
+<main class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-between mt-3">
+        <div class="d-inline">
+          <h3>Our Posted Jobs</h3>
+        </div>
+        <div>
+          <a href="/recruiter/jobs/post" class="btn btn-dark px-5">Add</a>
+        </div>
+      </div>
+
+      <!-- for each loop -->
+      <% if(data.jobs.length> 0 ) { 
+        data.jobs.forEach((job, index) => { %>
+      <%- include('modules/recruiterJobCard', {job, index}) %>
+      <% }) } else { %>
+      <h5 class="text-center">No Jobs Found.</h5>
+      <% } %>
+    </div>
+  </div>
+</main>
+
+<%- include('includes/foot') %>

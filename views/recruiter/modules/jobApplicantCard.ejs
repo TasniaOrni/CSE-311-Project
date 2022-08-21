@@ -1,0 +1,21 @@
+<div class="row" style="margin-right: 20px; background-color: rgba(128, 128, 128, 0.178)">
+    <h3 class="mt-3">
+        <%= job.title%>
+    </h3>
+
+    <% job.individualApplicant.forEach(applicant=> { %>
+        <div class="card">
+            <div class=" aligin-items-row d-flex flex-row justify-content-between w-100"
+                style="padding-top: 15px; padding-bottom: 10px;">
+                <p style="font-size: large;">
+                    <%= applicant.jobseekers.name %>
+                </p>
+                <a style="text-decoration: none; background-color: gray; width: 150px; border-radius: 5px; color: white; padding-top: 8px;"
+                    href="<%= applicant.cv %>">Download
+                    CV</a>
+            </div>
+        </div>
+        <br>
+        <% }); %>
+
+</div>
