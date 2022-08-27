@@ -1,15 +1,84 @@
 <%- include('modules/head') %>
 
-  <main>
-    <div class="content mt-xs-2 mt-md-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <h1>Project Name</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quidem, tempora, ipsum, quas, quis, vel, vero, eum, dolorem, aspernatur, doloribus, aliquam.</p>
-          </div>
+<main>
+  <div class="content">
+
+    <section>
+      <img class="job-image" src="/images/job-image.jpg" alt="background image">
+      <div class="carousel-caption">
+        <h5 class="text-find">Find Your Next Job</h5>
+        <p class="text-more">More then 2000 job list here</p>
+      </div>
+    </section>
+
+    <!-- Job Search Section Start -->
+    <section class="container mt-4">
+      <div class="col-12">
+        <div class="job-search-wrap">
+          <form class="job-search-form" action="#">
+            <div class="row my-4 px-4 d-flex justify-content-around align-items-center">
+              <div class="col-lg-auto col-sm-6 col-12 ">
+                <input class="search" type="text" placeholder="Search Job">
+              </div>
+
+              <div class="col-lg-auto col-sm-6 col-12 ">
+                <input class="search" type="text" placeholder="Location">
+              </div>
+
+              <div class="col-lg-auto col-sm-6 col-12 ">
+                <select class="search">
+                  <option value="1">Any category</option>
+                  <option value="2">Web Designer</option>
+                  <option value="3">Web Developer</option>
+                  <option value="4">Graphic Designer</option>
+                  <option value="5">App Developer</option>
+                  <option value="6">UI &amp; UX Expert</option>
+                </select>
+              </div>
+
+              <div class="col-lg-auto col-sm-6 col-12 ">
+                <button class="btn btn-dark">Search</button>
+              </div>
+
+          </form>
         </div>
       </div>
-  </main>
+  </div>
+  </section>
+
+  <!-- Job Search Section End -->
+  <section class="container mt-4">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="title">Latest Jobs</h2>
+        <p class="text-more">Here's the most recent job listed on the website.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container bottom-padding">
+    <div class="row gray text-white">
+      <div class="col-3 my-3">
+        <h1 class="number text-center">1500</h1>
+        <p class="text-center">Job Post</p>
+      </div>
+
+      <div class="col-3 my-3">
+        <h1 class="number text-center">2000</h1>
+        <p class="text-center">Members</p>
+      </div>
+
+      <div class="col-3 my-3">
+        <h1 class="number text-center">1000</h1>
+        <p class="text-center">Resume</p>
+      </div>
+
+      <div class="col-3 my-3">
+        <h1 class="number text-center">200</h1>
+        <p class="text-center">Company</p>
+      </div>
+    </div>
+  </section>
+</main>
 
 <%- include('modules/foot') %>
