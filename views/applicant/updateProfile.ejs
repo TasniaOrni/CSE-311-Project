@@ -26,7 +26,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-md-12">
-                <label class="labels" style="margin-top: 0px;">Name</label><input type="text" class="form-control" name="name" placeholder="Name" value="<%= data.user.name %>">
+                <label class="labels" style="margin-top: 0px;">Name</label><input type="text" class="form-control" name="name" placeholder="Name" value="<%= data.user.name %>" readonly>
               </div>
             </div>
             <div class="row mt-3">
@@ -134,10 +134,10 @@
     </div>
   </div>
 </main>
+
+<%- include('includes/foot') %>
 <script>
   $(document).ready(function() {
     $('#selected_Cat').val('<%= data.applicant.skill %>');
   });
 </script>
-
-<%- include('includes/foot') %>

@@ -10,57 +10,55 @@ const profileupdate = async (req, res) => {
 	var url = null;
 
 	if (req.file) {
-		url = req.file.path.replace('assets', '');
+		url = req.file.path;
+		url = url.replace('assets', '');
 	}
 
-	const sql = `UPDATE applicants SET phone = '${phone}', address = '${address}' WHERE uid = '${uid}'`;
+	var sql = `UPDATE users SET phone = '${phone}', address = '${address}' WHERE id = '${uid}'`;
 
-	const userUpdate = await Sequelize.query(sql, {
+	await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.UPDATE,
-		raw: true,
 	})
 		.then((data) => {
 			console.log(data);
-			return data;
+			// return data;
 		})
 		.catch((err) => {
 			console.log(err);
-			return null;
+			// return null;
 		});
 
 	if (url) {
-		var sql = `UPDATE applicants SET status = '${status}', cv = '${url}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}' WHERE uid = '${uid}'`;
+		sql = `UPDATE applicants SET status = '${status}', cv = '${url}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}', updatedAt = NOW() WHERE uid = '${uid}'`;
 
-		const updateApplicant = await Sequelize.query(sql, {
+		await Sequelize.query(sql, {
 			type: Sequelize.QueryTypes.UPDATE,
-			raw: true,
 		})
 			.then((data) => {
 				console.log(data);
-				return data;
+				// return data;
 			})
 			.catch((err) => {
-				console.log(err);
-				return null;
+				console.log('When url :', err);
+				// return null;
 			});
 	} else {
-		var sql = `UPDATE applicants SET status = '${status}',  region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}' WHERE uid = '${uid}'`;
+		var sql = `UPDATE applicants SET status = '${status}',  region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', dob = '${birthday}', education = '${education}', skill = '${skill}', updatedAt = NOW() WHERE uid = '${uid}'`;
 
-		const updateApplicant = await Sequelize.query(sql, {
+		await Sequelize.query(sql, {
 			type: Sequelize.QueryTypes.UPDATE,
-			raw: true,
 		})
 			.then((data) => {
 				console.log(data);
-				return data;
+				// return data;
 			})
 			.catch((err) => {
-				console.log(err);
-				return null;
+				console.log('When url is null :', err);
+				// return null;
 			});
 	}
 
-	return res.status(200).send({ message: 'Profile updated successfully' });
+	return res.status(200).json({ message: 'Profile updated successfully' });
 
 	// // check data is valid
 	// // console.log(req.body);
