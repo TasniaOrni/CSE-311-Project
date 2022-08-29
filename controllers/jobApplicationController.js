@@ -78,12 +78,10 @@ const getAppliedJobs = async (applicantId) => {
 		});
 };
 
-const getApplicants = async (req, res) => {
-	const data = res.locals.data;
+const getApplicants = async (recruiterId) => {
+	var sql = `SELECT * FROM jobApplications as ja JOIN applicants AS a ON ja.applicantId = a.id JOIN users AS u ON a.uid = u.id JOIN jobs AS j ON ja.jobId = j.id JOIN recruiters AS r ON r.id = '${recruiterId}' AND j.rid = r.id;`;
 
-	var sql = `SELECT * FROM jobApplications WHERE jobId = '${req.params.jobId}';`;
-
-	var applicants = await Sequelize.query(sql, {
+	return await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})
@@ -97,17 +95,26 @@ const getApplicants = async (req, res) => {
 			console.log(err);
 			return [];
 		});
-
-	return res.status(200).json({
-		message: 'Applicants',
-		applicants: applicants,
-	});
 };
 
 // find total applications for a recruiter
+const getTotalApplications = async (recruiterId) => {
+	const sql = `SELECT COUNT(*) as total FROM jobApplications AS ja JOIN jobs AS j ON ja.jobId = j.id JOIN recruiters AS r ON r.id = '${recruiterId}' AND j.rid = r.id;`;
+
+	return await Sequelize.query(sql, {
+		type: Sequelize.QueryTypes.SELECT,
+	}).then((data) => {
+		if (data.length > 0) {
+			return data[0].total;
+		}
+		return 0;
+	});
+};
 
 module.exports = {
 	apply,
 	getAppliedJobs,
 	getApplicants,
+
+	getTotalApplications,
 };

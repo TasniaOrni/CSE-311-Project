@@ -11,8 +11,8 @@ const dashboardView = async (req, res) => {
 
 	// console.log(data);
 	const total = await JobController.getTotalPost(data.recruiter.id);
-
 	const active = await JobController.getTotalOpenPost(data.recruiter.id);
+	const responses = await jobApplicationController.getTotalApplications(data.recruiter.id);
 
 	if (data.user.phone == '' || data.user.phone == null) {
 		res.redirect('/recruiter/profile/edit');
@@ -23,6 +23,7 @@ const dashboardView = async (req, res) => {
 			isLogin: res.locals.isLogin,
 			data: data,
 			total: total,
+			responses: responses,
 			active: active,
 		});
 	}
@@ -163,9 +164,14 @@ const createJobView = (req, res) => {
 const allApplicantView = async (req, res) => {
 	const data = res.locals.data;
 
-	data.applications = await jobApplicationController.getApplicants(req, res);
+	data.applications = await jobApplicationController.getApplicants(data.recruiter.id);
 
-	// res.send({ url: "/recruiter/jobs/applicants", title: "All Applicants", isLogin: res.locals.isLogin, data: data });
+	// return res.json({
+	// 	url: '/recruiter/jobs/applicants',
+	// 	title: 'All Applicants',
+	// 	isLogin: res.locals.isLogin,
+	// 	data: data.applications,
+	// });
 	res.render('recruiter/JobApplications', {
 		url: '/recruiter/jobs/applicants',
 		title: 'All Applicants',
