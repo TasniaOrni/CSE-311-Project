@@ -1,5 +1,4 @@
 const Sequelize = require('../models/index').sequelize;
-const tokenGenerator = require('../utils/tokenGenerator');
 
 // user itself can perform this operation
 const profileupdate = async (req, res) => {
@@ -14,9 +13,9 @@ const profileupdate = async (req, res) => {
 		url = req.file.path.replace('assets', '');
 	}
 
-	const userUpdateQuery = `UPDATE applicants SET phone = '${phone}', address = '${address}' WHERE uid = '${uid}'`;
+	const sql = `UPDATE applicants SET phone = '${phone}', address = '${address}' WHERE uid = '${uid}'`;
 
-	const userUpdate = await Sequelize.query(userUpdateQuery, {
+	const userUpdate = await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.UPDATE,
 		raw: true,
 	})
@@ -30,9 +29,9 @@ const profileupdate = async (req, res) => {
 		});
 
 	if (url) {
-		var updateApplicantQuery = `UPDATE applicants SET status = '${status}', cv = '${url}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}' WHERE uid = '${uid}'`;
+		var sql = `UPDATE applicants SET status = '${status}', cv = '${url}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}' WHERE uid = '${uid}'`;
 
-		const updateApplicant = await Sequelize.query(updateApplicantQuery, {
+		const updateApplicant = await Sequelize.query(sql, {
 			type: Sequelize.QueryTypes.UPDATE,
 			raw: true,
 		})
@@ -45,9 +44,9 @@ const profileupdate = async (req, res) => {
 				return null;
 			});
 	} else {
-		var updateApplicantQuery = `UPDATE applicants SET status = '${status}',  region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}' WHERE uid = '${uid}'`;
+		var sql = `UPDATE applicants SET status = '${status}',  region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}' WHERE uid = '${uid}'`;
 
-		const updateApplicant = await Sequelize.query(updateApplicantQuery, {
+		const updateApplicant = await Sequelize.query(sql, {
 			type: Sequelize.QueryTypes.UPDATE,
 			raw: true,
 		})
@@ -76,7 +75,9 @@ const profileCreateView = (req, res) => {
 const profileUpdateView = async (req, res) => {
 	const data = res.locals.data;
 
-	var applicant = await Sequelize.query(`SELECT * FROM applicants WHERE uid = '${res.locals.data.user.id}' limit 1;`, {
+	const sql = `SELECT * FROM applicants WHERE uid = '${res.locals.data.user.id}' limit 1;`;
+
+	var applicant = await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})
@@ -111,7 +112,9 @@ const dashboardView = (req, res) => {
 const profileView = async (req, res) => {
 	var data = res.locals.data;
 
-	var applicant = await Sequelize.query(`SELECT * FROM applicants WHERE uid = '${res.locals.data.user.id}' limit 1;`, {
+	const sql = `SELECT * FROM applicants WHERE uid = '${res.locals.data.user.id}' limit 1;`;
+
+	var applicant = await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})
@@ -137,7 +140,9 @@ const profileView = async (req, res) => {
 const jobsView = async (req, res) => {
 	const data = res.locals.data;
 
-	var jobs = await Sequelize.query(`SELECT * FROM jobs WHERE "status" = 'open' ORDER BY createdAt DESC;`, {
+	const sql = `SELECT * FROM jobs WHERE status = 'Open' ORDER BY createdAt DESC;`;
+
+	var jobs = await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})

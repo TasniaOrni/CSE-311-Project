@@ -1,5 +1,6 @@
 const Sequelize = require('../models/index').sequelize;
-const tokenGenerator = require('../utils/tokenGenerator');
+const JobController = require('../controllers/jobController');
+const jobApplicationController = require('./jobApplicationController');
 
 const dashboardView = async (req, res) => {
 	const data = res.locals.data;
@@ -9,9 +10,9 @@ const dashboardView = async (req, res) => {
 	}
 
 	// console.log(data);
-	const total = 0;
+	const total = await JobController.getTotalPost(data.recruiter.id);
 
-	const active = 0;
+	const active = await JobController.getTotalOpenPost(data.recruiter.id);
 
 	if (data.user.phone == '' || data.user.phone == null) {
 		res.redirect('/recruiter/profile/edit');
@@ -30,7 +31,9 @@ const dashboardView = async (req, res) => {
 const profileView = async (req, res) => {
 	const data = res.locals.data;
 
-	var recruiter = await Sequelize.query(`SELECT * FROM recruiters WHERE uid = '${res.locals.data.user.id}' limit 1;`, {
+	const sql = `SELECT * FROM recruiters WHERE uid = '${res.locals.data.user.id}' limit 1;`;
+
+	var recruiter = await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})
@@ -63,7 +66,9 @@ const createProfileView = async (req, res) => {
 	const data = res.locals.data;
 	const uid = data.user.id;
 
-	var recruiter = await Sequelize.query(`SELECT * FROM recruiters WHERE uid = '${uid}' limit 1;`, {
+	const sql = `SELECT * FROM recruiters WHERE uid = '${uid}' limit 1;`;
+
+	var recruiter = await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})
@@ -93,10 +98,12 @@ const createProfileView = async (req, res) => {
 	});
 };
 
-const updateProfileView = async(req, res) => {
+const updateProfileView = async (req, res) => {
 	const data = res.locals.data;
 
-		var recruiter = await Sequelize.query(`SELECT * FROM recruiters WHERE uid = '${res.locals.data.user.id}' limit 1;`, {
+	const sql = `SELECT * FROM recruiters WHERE uid = '${res.locals.data.user.id}' limit 1;`;
+
+	var recruiter = await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})
@@ -126,12 +133,22 @@ const updateProfileView = async(req, res) => {
 
 const jobsView = async (req, res) => {
 	const data = res.locals.data;
+	const rid = data.recruiter.id;
 
-	data.jobs = [];
+	const sql = `SELECT * FROM jobs WHERE rid = '${rid}'`;
 
-	console.log(data);
+	data.jobs = await Sequelize.query(sql, { type: Sequelize.QueryTypes.SELECT, raw: true })
+		.then(async (result) => {
+			return result;
+		})
+		.catch((err) => {
+			console.log(err);
+			return [];
+		});
 
-	await res.render('recruiter/jobs', {
+	// console.log(data);
+
+	res.render('recruiter/jobs', {
 		url: '/recruiter/jobs',
 		title: 'Ongoing Jobs',
 		isLogin: res.locals.isLogin,
@@ -140,14 +157,13 @@ const jobsView = async (req, res) => {
 };
 
 const createJobView = (req, res) => {
-
 	res.render('recruiter/jobPost', { url: '/recruiter/jobs/post', title: 'Create Job', isLogin: res.locals.isLogin });
 };
 
 const allApplicantView = async (req, res) => {
 	const data = res.locals.data;
 
-	data.applications = [];
+	data.applications = await jobApplicationController.getApplicants(req, res);
 
 	// res.send({ url: "/recruiter/jobs/applicants", title: "All Applicants", isLogin: res.locals.isLogin, data: data });
 	res.render('recruiter/JobApplications', {

@@ -54,18 +54,6 @@
             </div>
           </div>
         </form>
-        <div class="py-2 d-flex justify-content-around">
-          <% if(job.status !=="open" ) { %>
-          <button type="button" class="btn btn-dark px-5 me-2" data-index="<%= index%>">
-            Open</button>
-          <% } if (job.status!=="filled" ) { %>
-          <button type="button" class="btn btn-dark px-5 me-2" data-index="<%= index%>">
-            Filled </button>
-          <% } if(job.status !==" close" ) { %>
-          <button type="button" class="btn btn-dark px-5 me-2" data-index="<%=index%>">
-            Close</button>
-          <% } %>
-        </div>
       </div>
     </div>
   </div>

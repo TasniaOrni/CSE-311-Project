@@ -1,0 +1,20 @@
+<!-- Global Showcase of available recruitments -->
+<%- include('modules/head') %>
+
+<main class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <h3 class="mt-4 mb-3">Available Recruitments</h3>
+      <!-- for each loop -->
+      <% if(data.jobs.length> 0 ) { 
+        data.jobs.forEach((job, index) => { %>
+      <%- include('modules/jobCard', {job, index}) %>
+      <% }) } else { %>
+      <h5 class="text-center">No Jobs Found.</h5>
+      <% } %>
+    </div>
+  </div>
+</main>
+
+<%- include('modules/foot') %>

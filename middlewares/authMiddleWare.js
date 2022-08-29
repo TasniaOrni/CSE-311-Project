@@ -48,7 +48,7 @@ const isAuthenticated = (req, res, next) => {
 
 			// console.log("ERROR: AuthMMiddleware", err);
 
-			next();
+			return next();
 		}
 	});
 };
@@ -61,7 +61,7 @@ const isLogin = (req, res, next) => {
 
 	if (cookies == undefined) {
 		res.locals.isLogin = false;
-		next();
+		return next();
 	}
 
 	try {
@@ -69,7 +69,7 @@ const isLogin = (req, res, next) => {
 		accessToken = cookies && cookies.split(' ')[1];
 	} catch (err) {
 		res.locals.isLogin = false;
-		next();
+		return next();
 	}
 
 	jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET || config.JWT_SECRET, (err, decodeData) => {
@@ -81,7 +81,7 @@ const isLogin = (req, res, next) => {
 			res.locals.isLogin = true;
 		}
 
-		next();
+		return next();
 	});
 };
 
