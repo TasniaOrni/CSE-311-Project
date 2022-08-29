@@ -82,16 +82,9 @@ $(document).ready(function () {
 	$('.apply').click(function (e) {
 		e.preventDefault();
 
-		var index = $(this).data('index');
-		var buttonId = 'input[name=jobId-' + index + ']';
-
-		var jobId = $(buttonId).val();
+		var jobId = $(this).data('index');
 		var url = '/application/' + jobId;
-
-		var resId = '#serverResponse' + index;
-
-		console.log(index);
-		console.log(url);
+		var resId = '#serverResponse' + jobId;
 
 		$.ajax({
 			url: url,

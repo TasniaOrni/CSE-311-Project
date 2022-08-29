@@ -1,8 +1,10 @@
 const Sequelize = require('../models/index').sequelize;
+const { v4: uuidv4 } = require('uuid');
 
 const apply = async (req, res) => {
 	const data = res.locals.data;
 	const jobId = req.params.jobId;
+	const applicantId = res.locals.data.applicant.id;
 
 	// console.log(data.applicant);
 	var applicant = data.applicant;
@@ -37,13 +39,12 @@ const apply = async (req, res) => {
 		});
 	}
 
-	return await Sequelize.query(
-		`INSERT INTO jobApplications (applicantId, jobId) VALUES ('${res.locals.data.applicant.id}', '${jobId}');`,
-		{
-			type: Sequelize.QueryTypes.INSERT,
-			raw: true,
-		}
-	)
+	const sql = `INSERT INTO jobApplications (id, applicantId, jobId) VALUES ( '${uuidv4()}', '${applicantId}', '${jobId}');`;
+
+	return await Sequelize.query(sql, {
+		type: Sequelize.QueryTypes.INSERT,
+		raw: true,
+	})
 		.then((data) => {
 			return res.status(200).json({
 				message: 'You have applied successfully',
@@ -61,9 +62,9 @@ const apply = async (req, res) => {
 const getAppliedJobs = async (req, res) => {
 	const data = res.locals.data;
 
-	var query = `SELECT * FROM jobApplications WHERE applicantId = '${data.applicant.id}';`;
+	var sql = `SELECT * FROM jobApplications WHERE applicantId = '${data.applicant.id}';`;
 
-	var appliedJobs = await Sequelize.query(query, {
+	var appliedJobs = await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})
@@ -86,9 +87,9 @@ const getAppliedJobs = async (req, res) => {
 const getApplicants = async (req, res) => {
 	const data = res.locals.data;
 
-	var query = `SELECT * FROM jobApplications WHERE jobId = '${req.params.jobId}';`;
+	var sql = `SELECT * FROM jobApplications WHERE jobId = '${req.params.jobId}';`;
 
-	var applicants = await Sequelize.query(query, {
+	var applicants = await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})

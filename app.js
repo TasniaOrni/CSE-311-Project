@@ -49,11 +49,11 @@ app.use(
 app.use('/', routes);
 
 // error page
-app.use((req, res, next) => {
-	const isLogin = res.locals.isLogin;
-	const message = 'The page you requested was not found';
+// app.use((req, res, next) => {
+// 	const isLogin = res.locals.isLogin;
+// 	const message = 'The page you requested was not found';
 
-	res.render('error', { url: '/error', message: message, isLogin: isLogin });
-});
+// 	res.render('error', { url: '/error', message: message, isLogin: isLogin });
+// });
 
 app.listen(port);

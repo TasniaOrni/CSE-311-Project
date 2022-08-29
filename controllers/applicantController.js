@@ -159,9 +159,11 @@ const jobsView = async (req, res) => {
 		res.redirect('/error');
 	}
 
-	console.log(jobs);
+	// console.log(jobs);
 
 	data.jobs = jobs;
+
+	// return res.status(200).json({ message: 'Success', data: data });
 
 	res.render('applicant/jobs', { url: '/applicant/jobs', title: 'Jobs', data: data });
 };
