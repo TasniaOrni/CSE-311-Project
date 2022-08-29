@@ -1,5 +1,7 @@
 const Sequelize = require('../models/index').sequelize;
 
+const jobApplicationController = require('./jobApplicationController');
+
 // user itself can perform this operation
 const profileupdate = async (req, res) => {
 	const uid = res.locals.data.user.id;
@@ -171,12 +173,12 @@ const jobsView = async (req, res) => {
 const applicationView = async (req, res) => {
 	const data = res.locals.data;
 
-	data.jobs = [];
+	data.jobs = await jobApplicationController.getAppliedJobs(data.applicant.id);
 
 	// console.log(data.jobs);
 
 	res.render('applicant/applications', { url: '/applicant/applications', title: 'Job Applications', data: data });
-	// res.send({ url: "/applicant/applications", title: "Job Applications", data: data });
+	// res.send({ url: "/applicant/applications", title: "Job Applications", data: data.jobs });
 };
 
 module.exports = {

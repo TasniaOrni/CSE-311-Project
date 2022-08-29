@@ -59,12 +59,10 @@ const apply = async (req, res) => {
 		});
 };
 
-const getAppliedJobs = async (req, res) => {
-	const data = res.locals.data;
+const getAppliedJobs = async (applicantId) => {
+	var sql = `SELECT * FROM jobApplications as ja INNER JOIN applicants AS a on ja.applicantId = '${applicantId}' INNER JOIN jobs AS j ON ja.jobId = j.id;`;
 
-	var sql = `SELECT * FROM jobApplications WHERE applicantId = '${data.applicant.id}';`;
-
-	var appliedJobs = await Sequelize.query(sql, {
+	return await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.SELECT,
 		raw: true,
 	})
@@ -78,10 +76,6 @@ const getAppliedJobs = async (req, res) => {
 			console.log(err);
 			return [];
 		});
-	return res.status(200).json({
-		message: 'Applied Jobs',
-		jobs: appliedJobs,
-	});
 };
 
 const getApplicants = async (req, res) => {
