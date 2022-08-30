@@ -72,10 +72,12 @@
             <div class="col-md-12 my-1">
               <label class="labels">Status</label><input type="text" name="status" class="form-control" name="status" placeholder="No Status" value="<%- data.applicant.status %>" readonly>
             </div>
+            <% if (data.applicant.cv !== '' || data.applicant.cv !== null || data.applicant.cv !== "null") { %>
             <div class="d-flex align-items-center justify-content-center mt-3">
               <a href="<%= data.applicant.cv %>" class="btn btn-dark px-5 mt-3 mb-5 me-2">Download
                 CV</a>
             </div>
+            <% } %>
             <div class="col-md-6">
               <div class="form-group">
               </div>

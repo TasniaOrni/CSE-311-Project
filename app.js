@@ -20,6 +20,7 @@ app.use(
 );
 
 // express configuration
+app.use('/assets/uploads', express.static('uploads'));
 app.use(express.static('assets'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

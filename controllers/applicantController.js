@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const Sequelize = require('../models/index').sequelize;
 
 const jobApplicationController = require('./jobApplicationController');
@@ -14,9 +15,38 @@ const profileupdate = async (req, res) => {
 	if (req.file) {
 		url = req.file.path;
 		url = url.replace('assets', '');
+
+		// console.log('url: ' + url);
+	} else {
+		// console.log('no file');
 	}
 
-	var sql = `UPDATE users SET phone = '${phone}', address = '${address}' WHERE id = '${uid}'`;
+	var applicant = res.locals.data.applicant;
+	var sql = '';
+	if (!applicant || !applicant.dob) {
+		if (url) {
+			sql = `INSERT INTO applicants (id, uid, status, region, country, currentPosition, currentCompany, dob, education, skill, cv) VALUES 													
+															('${uuidv4()}', '${uid}', '${status}', '${region}', '${country}', '${currentPosition}', '${currentCompany}', '${birthday}', '${education}', '${skill}', '${url}');`;
+		} else {
+			sql = `INSERT INTO applicants (id, uid, status, region, country, currentPosition, currentCompany, dob, education, skill) VALUES 													
+															('${uuidv4()}', '${uid}', '${status}', '${region}', '${country}', '${currentPosition}', '${currentCompany}', '${birthday}', '${education}', '${skill}';`;
+		}
+
+		return await Sequelize.query(sql, {
+			type: Sequelize.QueryTypes.INSERT,
+			raw: true,
+		})
+			.then((data) => {
+				return res.redirect('/applicant/profile');
+			})
+			.catch((err) => {
+				return res.redirect('/applicant/profile');
+			});
+	}
+
+	// console.log('Data: ' + JSON.stringify(req.body));
+
+	sql = `UPDATE users SET phone = '${phone}', address = '${address}' WHERE id = '${uid}'`;
 
 	await Sequelize.query(sql, {
 		type: Sequelize.QueryTypes.UPDATE,
@@ -31,7 +61,7 @@ const profileupdate = async (req, res) => {
 		});
 
 	if (url) {
-		sql = `UPDATE applicants SET status = '${status}', cv = '${url}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', birthday = '${birthday}', education = '${education}', skill = '${skill}', updatedAt = NOW() WHERE uid = '${uid}'`;
+		sql = `UPDATE applicants SET status = '${status}', cv = '${url}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', dob = '${birthday}', education = '${education}', skill = '${skill}', updatedAt = NOW() WHERE uid = '${uid}'`;
 
 		await Sequelize.query(sql, {
 			type: Sequelize.QueryTypes.UPDATE,
@@ -45,7 +75,7 @@ const profileupdate = async (req, res) => {
 				// return null;
 			});
 	} else {
-		var sql = `UPDATE applicants SET status = '${status}',  region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', dob = '${birthday}', education = '${education}', skill = '${skill}', updatedAt = NOW() WHERE uid = '${uid}'`;
+		var sql = `UPDATE applicants SET status = '${status}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', dob = '${birthday}', education = '${education}', skill = '${skill}', updatedAt = NOW() WHERE uid = '${uid}'`;
 
 		await Sequelize.query(sql, {
 			type: Sequelize.QueryTypes.UPDATE,
@@ -60,7 +90,7 @@ const profileupdate = async (req, res) => {
 			});
 	}
 
-	return res.status(200).json({ message: 'Profile updated successfully' });
+	return res.redirect('/applicant/profile');
 
 	// // check data is valid
 	// // console.log(req.body);
@@ -101,8 +131,11 @@ const profileUpdateView = async (req, res) => {
 
 const dashboardView = (req, res) => {
 	const data = res.locals.data;
+	const role = data.credential.role;
 
-	if (data.user.phone == '' || data.user.phone == null) {
+	console.log(data.applicant.dob ? 'true' : 'false');
+
+	if (data.user.phone == '' || data.user.phone == null || !data.applicant.dob) {
 		res.redirect('/applicant/profile/edit');
 	} else {
 		res.render('applicant/index', { url: '/applicant', title: 'Dashboard', isLogin: res.locals.isLogin });

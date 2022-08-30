@@ -9,7 +9,7 @@
       <% if(data.jobs.length> 0 ) { data.jobs.forEach((job, index) => { %>
       <%- include('modules/appliedJobCard', {job, index}) %>
       <% }) } else { %>
-      <h2>No where you applied yet.</h2>
+      <h5 class="text-muted">No where you applied yet.</h5>
       <% } %>
     </div>
   </div>
