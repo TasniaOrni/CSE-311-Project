@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const Sequelize = require('../models/index').sequelize;
 const JobController = require('../controllers/jobController');
 const jobApplicationController = require('./jobApplicationController');
@@ -14,7 +15,7 @@ const dashboardView = async (req, res) => {
 	const active = await JobController.getTotalOpenPost(data.recruiter.id);
 	const responses = await jobApplicationController.getTotalApplications(data.recruiter.id);
 
-	if (data.user.phone == '' || data.user.phone == null) {
+	if (data.user.phone == '' || data.user.phone == null || data.recruiter.id == '0') {
 		res.redirect('/recruiter/profile/edit');
 	} else {
 		res.render('recruiter/index', {
@@ -66,28 +67,6 @@ const profileView = async (req, res) => {
 const createProfileView = async (req, res) => {
 	const data = res.locals.data;
 	const uid = data.user.id;
-
-	const sql = `SELECT * FROM recruiters WHERE uid = '${uid}' limit 1;`;
-
-	var recruiter = await Sequelize.query(sql, {
-		type: Sequelize.QueryTypes.SELECT,
-		raw: true,
-	})
-		.then((data) => {
-			if (data.length > 0) {
-				return data[0];
-			}
-			return null;
-		})
-		.catch((err) => {
-			console.log(err);
-			return null;
-		});
-
-	if (!recruiter) {
-		res.redirect('/error');
-	}
-	data.recruiter = recruiter;
 
 	// console.log("Later", data);
 
@@ -180,6 +159,135 @@ const allApplicantView = async (req, res) => {
 	});
 };
 
+const createProfile = async (req, res) => {
+	const uid = res.locals.data.user.id;
+
+	const { phone, address } = req.body;
+	const {
+		companyName,
+		contactNumber,
+		companyAddress,
+		yearOfEstablishment,
+		country,
+		region,
+		businessDescription,
+		tradingLicense,
+		websiteURL,
+	} = req.body;
+
+	var recruiter = res.locals.data.recruiter;
+	var sql = '';
+
+	sql = `UPDATE users SET phone = '${phone}', address = '${address}' WHERE id = '${uid}'`;
+
+	await Sequelize.query(sql, {
+		type: Sequelize.QueryTypes.UPDATE,
+	})
+		.then((data) => {
+			console.log(data);
+			// return data;
+		})
+		.catch((err) => {
+			console.log(err);
+			// return null;
+		});
+
+	if (!recruiter || !recruiter.id) {
+		sql = `INSERT INTO recruiters (id, uid, companyName, contactNumber, companyAddress, yearOfEstablishment, country, region, businessDescription, tradingLicense, websiteURL) VALUES ('${uuidv4()}', '${uid}', '${companyName}', '${contactNumber}', '${companyAddress}', '${yearOfEstablishment}', '${country}', '${region}', '${businessDescription}', '${tradingLicense}', '${websiteURL}')`;
+	} else {
+		sql = `UPDATE recruiters SET companyName = '${companyName}', contactNumber = '${contactNumber}', companyAddress = '${companyAddress}', yearOfEstablishment = '${yearOfEstablishment}', country = '${country}', region = '${region}', businessDescription = '${businessDescription}', tradingLicense = '${tradingLicense}', websiteURL = '${websiteURL}' WHERE id = '${recruiter.id}'`;
+	}
+
+	return await Sequelize.query(sql, {
+		type: Sequelize.QueryTypes.INSERT,
+		raw: true,
+	})
+		.then((data) => {
+			return res.redirect('/recruiter/profile');
+		})
+		.catch((err) => {
+			return res.redirect('/recruiter/profile');
+		});
+};
+
+const profileupdate = async (req, res) => {
+	const { phone, address } = req.body;
+	const { status, region, country, currentPosition, currentCompany, birthday, education, skill } = req.body;
+
+	var sql = '';
+	if (!applicant || !applicant.dob) {
+		if (url) {
+			sql = `INSERT INTO applicants (id, uid, status, region, country, currentPosition, currentCompany, dob, education, skill, cv) VALUES 													
+															('${uuidv4()}', '${uid}', '${status}', '${region}', '${country}', '${currentPosition}', '${currentCompany}', '${birthday}', '${education}', '${skill}', '${url}');`;
+		} else {
+			sql = `INSERT INTO applicants (id, uid, status, region, country, currentPosition, currentCompany, dob, education, skill) VALUES 													
+															('${uuidv4()}', '${uid}', '${status}', '${region}', '${country}', '${currentPosition}', '${currentCompany}', '${birthday}', '${education}', '${skill}';`;
+		}
+
+		return await Sequelize.query(sql, {
+			type: Sequelize.QueryTypes.INSERT,
+			raw: true,
+		})
+			.then((data) => {
+				return res.redirect('/applicant/profile');
+			})
+			.catch((err) => {
+				return res.redirect('/applicant/profile');
+			});
+	}
+
+	// console.log('Data: ' + JSON.stringify(req.body));
+
+	sql = `UPDATE users SET phone = '${phone}', address = '${address}' WHERE id = '${uid}'`;
+
+	await Sequelize.query(sql, {
+		type: Sequelize.QueryTypes.UPDATE,
+	})
+		.then((data) => {
+			console.log(data);
+			// return data;
+		})
+		.catch((err) => {
+			console.log(err);
+			// return null;
+		});
+
+	if (url) {
+		sql = `UPDATE applicants SET status = '${status}', cv = '${url}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', dob = '${birthday}', education = '${education}', skill = '${skill}', updatedAt = NOW() WHERE uid = '${uid}'`;
+
+		await Sequelize.query(sql, {
+			type: Sequelize.QueryTypes.UPDATE,
+		})
+			.then((data) => {
+				console.log(data);
+				// return data;
+			})
+			.catch((err) => {
+				console.log('When url :', err);
+				// return null;
+			});
+	} else {
+		var sql = `UPDATE applicants SET status = '${status}', region = '${region}', country = '${country}', currentPosition = '${currentPosition}', currentCompany = '${currentCompany}', dob = '${birthday}', education = '${education}', skill = '${skill}', updatedAt = NOW() WHERE uid = '${uid}'`;
+
+		await Sequelize.query(sql, {
+			type: Sequelize.QueryTypes.UPDATE,
+		})
+			.then((data) => {
+				console.log(data);
+				// return data;
+			})
+			.catch((err) => {
+				console.log('When url is null :', err);
+				// return null;
+			});
+	}
+
+	return res.redirect('/applicant/profile');
+
+	// // check data is valid
+	// // console.log(req.body);
+};
+
 module.exports = {
 	dashboardView,
 	createJobView,
@@ -188,4 +296,6 @@ module.exports = {
 	createProfileView,
 	updateProfileView,
 	allApplicantView,
+
+	createProfile,
 };

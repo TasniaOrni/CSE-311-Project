@@ -5,6 +5,7 @@ const authMiddleware = require('../middlewares/authMiddleWare.js');
 const roleValidation = require('../middlewares/roleMiddleware');
 
 router.get('/profile/edit', authMiddleware.isAuthenticated, roleValidation.isRecruiter, recruiterController.createProfileView);
+router.post('/profile/edit', authMiddleware.isAuthenticated, roleValidation.isRecruiter, recruiterController.createProfile);
 
 router.get('/', authMiddleware.isAuthenticated, roleValidation.isRecruiter, recruiterController.dashboardView);
 router.get('/profile', authMiddleware.isAuthenticated, roleValidation.isRecruiter, recruiterController.profileView);

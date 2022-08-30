@@ -53,8 +53,8 @@ $(document).ready(function () {
 		var form = $(this);
 
 		$.ajax({
-			url: '/recruiter/',
-			type: post,
+			url: '/recruiter/profile',
+			type: 'POST',
 			data: form.serialize(),
 			success: function (response) {
 				// console.log(response);
@@ -63,6 +63,34 @@ $(document).ready(function () {
 					title: response.message,
 				}).then(() => {
 					window.location.href = '/recruiter/';
+				});
+			},
+			error: function (error) {
+				console.log(error.responseJSON.message);
+				Toast.fire({
+					icon: 'error',
+					title: error.responseJSON.message,
+				});
+			},
+		});
+	});
+
+	$('#editProfileForm').submit(function (e) {
+		e.preventDefault();
+		
+		var form = $(this);
+
+		$.ajax({
+			url: '/recruiter/profile/edit',
+			type: 'POST',
+			data: form.serialize(),
+			success: function (response) {
+				// console.log(response);
+				Toast.fire({
+					icon: 'success',
+					title: response.message,
+				}).then(() => {
+					window.location.href = '/recruiter/profile';
 				});
 			},
 			error: function (error) {
